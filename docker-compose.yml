@@ -16,7 +16,7 @@ services:
         depends_on:
             - redis
         networks:
-            - laravel-eloquente
+            - eloquent
 
     # nginx
     nginx:
@@ -28,12 +28,12 @@ services:
             - ./:/var/www
             - ./docker/nginx/:/etc/nginx/conf.d/
         networks:
-            - laravel-eloquente
+            - eloquent
 
     # db mysql
     db:
         image: mysql:5.7.22
-        platform: linux/x86_64
+        # platform: linux/x86_64
         restart: unless-stopped
         environment:
             MYSQL_DATABASE: ${DB_DATABASE:-laravel}
@@ -45,7 +45,7 @@ services:
         ports:
             - "3388:3306"
         networks:
-            - laravel-eloquente
+            - eloquent
 
     # queue
     queue:
@@ -58,14 +58,14 @@ services:
             - redis
             - app
         networks:
-            - laravel-eloquente
+            - eloquent
 
     # redis
     redis:
         image: redis:latest
         networks:
-            - laravel-eloquente
+            - eloquent
 
 networks:
-    laravel-eloquente:
+    eloquent:
         driver: bridge
