@@ -1,8 +1,33 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Models\Post;
 use App\Models\User;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Route;
 
+
+Route::get('/insert', function (Post $post, Request $request) {
+
+    $post->user_id  = 1;
+    $post->title    = 'Primeiro Post'. Str::random(5);
+    $post->body     = 'Conteúdo do primeiro post';
+    $post->date     = date('Y-m-d');
+
+    dd($post);
+    $post->save();
+
+    $posts = $post->get();
+
+    return $posts;
+});
+
+Route::get('/order', function (User $user) {
+    $users = $user->orderBy('id', 'DESC')->get();
+
+    // dd($users);
+
+    return $users;
+});
 
 Route::get('/pagination', function(User $user) {
     $filter = request('name');
