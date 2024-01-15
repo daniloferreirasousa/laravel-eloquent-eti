@@ -41,6 +41,27 @@ class Post extends Model
         $this->attributes['date'] = Carbon::make($value)->format('Y-m-d');
     }
 
+
+    public function scopeLastWeek($query)
+    {
+        return $this->whereDate('date', '>=', now()->subDays(4))
+                    ->whereDate('date', '<=', now()->subDays(1));
+    }
+
+    public function scopeToday($query)
+    {
+        return $this->whereDate('date', now());
+    }
+
+    public function scopeBetween($query, $firstDate, $lastDate)
+    {
+        $firstDate = Carbon::make($firstDate)->format('Y-m-d');
+        $lastDate  = Carbon::make($lastDate)->format('Y-m-d');
+
+        return $this->whereDate('date', '>=', $firstDate)
+                    ->whereDate('date', '<=', $lastDate);
+    }
+
     /*
     *  Tipos de manipulações que podem ser implementadas
     */

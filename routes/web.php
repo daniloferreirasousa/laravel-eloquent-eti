@@ -5,6 +5,14 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/local-scope', function (Post $post) {
+    // $posts = $post->last_week()->get();
+    // $posts = $post->today()->get();
+
+    $posts = $post->between('2024-01-01', '2024-12-31')->get();
+
+    return $posts;
+});
 
 Route::get('/mutators', function (User $user, Post $post) {
     $user = $user->first();
