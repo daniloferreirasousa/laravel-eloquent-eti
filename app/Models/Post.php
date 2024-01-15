@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Models\User;
+use App\Acessors\DefaultAcessors;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, DefaultAcessors;
 
     protected $fillable = [
         'user_id',
@@ -23,6 +25,11 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
+
+    public function getDateAttribute($value)
+    {
+        return Carbon::make($value)->format('d/m/Y');
+    }
 
     /*
     *  Tipos de manipulações que podem ser implementadas

@@ -5,6 +5,12 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/acessors', function (Post $post) {
+    $posts = $post->first();
+
+    return $posts;
+});
+
 Route::get('/soft-delete', function (Post $post) {
     $post->destroy(6);
 
