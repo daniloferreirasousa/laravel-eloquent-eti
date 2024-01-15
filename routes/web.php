@@ -5,6 +5,21 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
 
+
+Route::get('/mutators', function (User $user, Post $post) {
+    $user = $user->first();
+
+    $post = new Post([
+        'title'     => 'Novo Titulo ' . Str::random(10),
+        'body'      => 'Conteúdo do post: ' . Str::random(150),
+        'date'      => now(),
+    ]);
+
+    $user->posts()->save($post);
+
+    return $post;
+});
+
 Route::get('/acessors', function (Post $post) {
     $posts = $post->first();
 

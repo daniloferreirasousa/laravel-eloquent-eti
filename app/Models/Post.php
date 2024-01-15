@@ -20,6 +20,10 @@ class Post extends Model
         'date',
     ];
 
+    protected $casts = [
+        'date' => 'timestamp:d/m/Y',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -29,6 +33,12 @@ class Post extends Model
     public function getDateAttribute($value)
     {
         return Carbon::make($value)->format('d/m/Y');
+    }
+
+
+    public function setDateAttribute($value)
+    {
+        $this->attributes['date'] = Carbon::make($value)->format('Y-m-d');
     }
 
     /*
