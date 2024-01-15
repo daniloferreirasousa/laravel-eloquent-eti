@@ -5,6 +5,44 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/soft-delete', function (Post $post) {
+    $post->destroy(6);
+
+    $posts = $post->get();
+
+    return $posts;
+});
+
+Route::get('/delete', function (Post $post) {
+    // $post = $post->destroy(Post::get());
+    $post = $post->where('id', 1)->first();
+
+    if (!$post)
+        return 'Post Not Found';
+
+    dd($post->delete());
+});
+
+Route::get('/update', function () {
+    if (!$post = Post::find(1))
+        return 'Post Not Found';
+
+    $post->title = 'Título atualizado!';
+    $post->save();
+    dd($post);
+});
+
+Route::get('/insert2', function (Post $post) {
+    $post = $post->create([
+        'user_id'   => 1,
+        'title'     => Str::random(15),
+        'body'      => Str::random(150),
+        'date'      => date('Y-m-d'),
+    ]);
+
+    dd($post);
+});
+
 
 Route::get('/insert', function (Post $post, Request $request) {
 
@@ -13,7 +51,7 @@ Route::get('/insert', function (Post $post, Request $request) {
     $post->body     = 'Conteúdo do primeiro post';
     $post->date     = date('Y-m-d');
 
-    dd($post);
+    // dd($post);
     $post->save();
 
     $posts = $post->get();
