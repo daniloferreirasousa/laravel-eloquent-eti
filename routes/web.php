@@ -5,6 +5,13 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/anonymous-global-scopes', function (Post $post) {
+    // $posts = $post->get();
+    $posts = $post->withoutGlobalScope('year')->get();
+
+    return $posts;
+});
+
 Route::get('/local-scope', function (Post $post) {
     // $posts = $post->last_week()->get();
     // $posts = $post->today()->get();

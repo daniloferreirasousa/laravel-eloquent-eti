@@ -8,6 +8,7 @@ use App\Acessors\DefaultAcessors;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder;
 
 class Post extends Model
 {
@@ -23,6 +24,13 @@ class Post extends Model
     protected $casts = [
         'date' => 'timestamp:d/m/Y',
     ];
+
+    protected static function booted()
+    {
+        static::addGlobalScope('year', function (Builder $builder) {
+            $builder->whereYear('date', Carbon::now()->year);
+        });
+    }
 
     public function user()
     {
