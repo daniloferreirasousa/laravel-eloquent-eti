@@ -12,6 +12,9 @@ use App\Models\{
 use App\Observers\{
     PostObserver
 };
+use App\Events\PostCreated;
+use App\Listeners\NotifyNewPostCreated;
+
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -22,6 +25,10 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+
+        PostCreated::class => [
+            NotifyNewPostCreated::class,
         ],
     ];
 

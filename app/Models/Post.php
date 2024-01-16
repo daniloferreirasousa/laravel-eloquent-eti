@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
 use App\Scopes\YearScope;
+use App\Events\PostCreated;
 
 class Post extends Model
 {
@@ -24,6 +25,10 @@ class Post extends Model
 
     protected $casts = [
         'date' => 'timestamp:d/m/Y',
+    ];
+
+    protected $dispatchesEvents = [
+        'created'   => PostCreated::class,
     ];
 
     protected static function booted()
