@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
+use App\Scopes\YearScope;
 
 class Post extends Model
 {
@@ -27,9 +28,11 @@ class Post extends Model
 
     protected static function booted()
     {
-        static::addGlobalScope('year', function (Builder $builder) {
-            $builder->whereYear('date', Carbon::now()->year);
-        });
+        // static::addGlobalScope('year', function (Builder $builder) {
+        //     $builder->whereYear('date', Carbon::now()->year);
+        // });
+
+        static::addGlobalScope(new YearScope);
     }
 
     public function user()
