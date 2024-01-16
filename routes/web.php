@@ -7,6 +7,16 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
 
 
+Route::get('/observer', function (Post $post) {
+    $post = $post->create([
+        'title' => Str::random(100),
+        'body'  => Str::random(200),
+        'date'  => now()
+    ]);
+
+    return $post;
+});
+
 Route::get('/global-scopes', function (Post $post) {
     // $posts = $post->get();
     $posts = $post->withoutGlobalScope(YearScope::class)->get();
